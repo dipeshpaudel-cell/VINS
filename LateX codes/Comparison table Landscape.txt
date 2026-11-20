@@ -1,0 +1,143 @@
+% Required packages in preamble:
+% \usepackage{booktabs}
+% \usepackage{array}
+% \usepackage{rotating}
+% \usepackage[table]{xcolor}
+
+\begin{sidewaystable*}[htbp]
+\centering
+\caption{System Comparison with Prior Work}
+\label{tab:system_comparison}
+\renewcommand{\arraystretch}{1.25}
+\setlength{\tabcolsep}{4pt}
+\footnotesize
+\begin{tabular}{>{\bfseries\raggedright\arraybackslash}p{2.3cm} *{10}{>{\centering\arraybackslash}p{1.75cm}} >{\columncolor{blue!10}\centering\arraybackslash}p{1.85cm}}
+\toprule
+\rowcolor{blue!25}
+\textbf{Metric} &
+\textbf{Abdul Rahman et al. (2025)} &
+\textbf{Karjalainen et al. (2025)} &
+\textbf{James et al. (2023)} &
+\textbf{Mohta et al. (2018)} &
+\textbf{Barbas Laina et al. (2025)} &
+\textbf{Shah et al. (2025)} &
+\textbf{Zheng et al. (2024)} &
+\textbf{SWIFT (2025)} &
+\textbf{Hu et al. (2025)} &
+\textbf{Zhou et al. (2021)} &
+\textbf{Our Project (2026)} \\
+\midrule
+Companion Computer &
+Jetson Nano (4 GB) &
+Jetson Orin NX &
+Jetson Nano &
+Intel NUC i7 &
+Jetson Orin NX (16 GB) &
+Raspberry Pi 4B &
+Intel NUC i7 / Orin NX &
+Jetson Orin NX (16 GB) &
+Intel NUC11 i7 &
+Intel Core i7 / NUC &
+\textbf{Raspberry Pi 4B} \\
+\addlinespace[3pt]
+
+State Estimation &
+VINS-Mono / ORB-SLAM3 + EKF &
+VINS-Fusion (VIO) &
+Visual-Inertial-LiDAR &
+SVO + UKF &
+OKVIS2 (VI-SLAM) &
+RTAB-MAP &
+FAST-LIVO2 (LIO-VIO) &
+Collaborative VINS-Fusion &
+VINS-Mono (VIO) &
+Stereo / RGB-D VIO &
+\textbf{VINS-Fusion (VIO)} \\
+\addlinespace[3pt]
+
+Path Planner &
+$A^*$ + YOLOv8 (reactive) &
+EGO-Planner-v2 (3D) &
+Reactive local planner &
+QP-based Safe Corridor (3D) &
+Informed RRT* + Anchoring &
+$A^*$ + RPP (2D only) &
+Bubble Planner (3D) &
+SWIFT (Neural Net 3D) &
+EGO-Planner (3D) &
+EGO-Planner (3D) &
+\textbf{EGO-Planner (3D)} \\
+\addlinespace[3pt]
+
+Flight Controller Node &
+PX4 internal PID &
+Custom PX4 tracker &
+PX4 internal PID &
+$SE(3)$ geometric &
+PixRacer controller &
+$SE(3)$ geometric &
+On-manifold MPC &
+STM32 controller &
+Cascaded PID &
+$SE(3)$ geometric &
+\textbf{$SE(3)$ geometric} \\
+\addlinespace[3pt]
+
+Flight Speed &
+Not reported &
+0.5--1.5~m/s &
+Low-speed indoor &
+Up to 8~m/s &
+Up to 4~m/s &
+$\sim 0.1$~m/s &
+Up to 3~m/s &
+1.5~m/s (real) / 10~m/s (sim) &
+Low-speed indoor &
+3.0--3.56~m/s &
+\textbf{0.5~m/s} \\
+\addlinespace[3pt]
+
+Obstacle Avoidance &
+Vision-based (YOLOv8) &
+3D voxel-based &
+3D sensor-based &
+3D safe corridor &
+3D volumetric (\texttt{supereight2}) &
+2D grid-based &
+3D corridor / bubble &
+Depth-based neural 3D &
+3D voxel-based &
+3D ESDF-free voxel &
+\textbf{3D voxel-based} \\
+\addlinespace[3pt]
+
+Mean Tracking Error &
+0.32~m MAE (0.28~m wp) &
+0.33--0.47~m (VIO ATE) &
+0.40~m (nav error) &
+$<0.6$~m drift over 60~m &
+0.51~m ATE ($<1.0$~m drift) &
+0.077~m (path error)* &
+0.045--0.080~m (ATE RMSE) &
+3.31~m (loop VIO drift) &
+Not reported ($\ge 70\%$ succ.) &
+Not reported &
+\textbf{0.276~m (mean 3D)} \\
+\addlinespace[3pt]
+
+CPU Utilization &
+Not reported &
+Not reported &
+Not reported &
+$\sim 80\%$ (on i7) &
+52~ms VIO / 217~ms depth &
+Not reported &
+53.47~ms/frame &
+0.89~ms inference &
+Not reported &
+0.81~ms planning &
+\textbf{90.8\% mean} \\
+\bottomrule
+\multicolumn{12}{l}{\scriptsize *2D grid path error only; Our Project (2026) reports full 3D closed-loop Euclidean tracking error ($\text{RMSE}_{3D} = 0.358$~m).}
+\end{tabular}
+\end{sidewaystable*}

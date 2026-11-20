@@ -1,0 +1,44 @@
+\subsection{Research Gap}
+\label{sec:research_gap}
+
+Recent literature on autonomous quadcopter navigation in GNSS-denied environments reveals a pronounced divide between computational hardware requirements, localization accuracy, and full 3D autonomy. On the high-compute end, state-of-the-art visual-inertial navigation and planning frameworks rely on desktop-class x86 processors or CUDA-enabled embedded GPUs to achieve agile 3D flight. Using Intel Core i7 NUC platforms, Mohta et al.~\cite{mohta2018} demonstrated stereo-VIO (SVO+UKF) with quadratic-programming safe corridors at speeds up to $8.0~\text{m/s}$ ($<0.60~\text{m}$ drift over $60~\text{m}$ at $\sim 80\%$ CPU load), Zhou et al.~\cite{zhou2021} introduced ESDF-free B-spline replanning (EGO-Planner) at $0.81~\text{ms}$ planning latency without reporting onboard VIO-coupled trajectory RMSE, and Hu et al.~\cite{hu2025} evaluated VINS-Mono with EGO-Planner in dense indoor clutter ($\ge 70\%$ success rate) while noting that monocular VIO drift induced false virtual obstacles. Similarly, deployments on NVIDIA Jetson Orin NX modules achieve robust 3D navigation in unstructured forests and multi-agent clutter, yet real-world visual-inertial localization errors still reach $0.33\text{--}0.47~\text{m}$ ATE under VINS-Fusion and EGO-Planner-v2~\cite{karjalainen2025}, $0.51~\text{m}$ simulated SLAM ATE ($<1.0~\text{m}$ real terminal drift) under OKVIS2~\cite{barbaslaina2025}, or $3.31~\text{m}$ closed-loop VIO drift under collaborative neural planning~\cite{swift2025}. While multi-modal LiDAR-inertial-visual pipelines such as FAST-LIVO2~\cite{zheng2024} tighten ATE RMSE to $0.045\text{--}0.080~\text{m}$, they depend on costly, power-intensive 3D LiDAR payloads alongside Intel i7 or Jetson Orin NX hardware.
+
+Conversely, existing navigation systems deployed on low-cost, resource-constrained single-board computers have been forced to compromise dimensionality, flight speed, or sensor minimalism. On a GPU-less Raspberry Pi 4B, Shah et al.~\cite{shah2025} demonstrated indoor visual SLAM (RTAB-MAP) with $0.077~\text{m}$ 2D path error, but full SLAM overhead restricted planning to 2D occupancy grids and quasi-static flight speeds ($\sim 0.1~\text{m/s}$). Low-power NVIDIA Jetson Nano implementations either exhibit higher navigation errors ($0.32~\text{m}$ GPS-degraded MAE and $0.28~\text{m}$ waypoint error in Abdul Rahman et al.~\cite{abdulrahman2025}, which also relies on outdoor GPS fallback) or require supplementary LiDAR sensors alongside stereo cameras ($0.40~\text{m}$ indoor navigation accuracy in James et al.~\cite{james2023}). Moreover, many trajectory planners are benchmarked using external motion-capture ground truth rather than closed-loop onboard VIO feedback, leaving the coupled behavior of VIO drift, real-time 3D voxel mapping, and geometric control uncharacterized on ARM-only hardware.
+
+The present study directly bridges this \emph{Compute--Accuracy--Autonomy} gap. By integrating thread-decoupled stereo-inertial VINS-Fusion (with disabled RGB and IR-emitter streams at $420\times 240$ resolution, $15~\text{Hz}$ stereo-IR input, and $200~\text{Hz}$ IMU pre-integration), ESDF-free 3D B-spline optimization (EGO-Planner), and a $200~\text{Hz}$ $SE(3)$ geometric controller, we achieve complete 3D autonomous obstacle avoidance at $0.5~\text{m/s}$---a fivefold speed increase over prior Raspberry Pi 4B visual navigation~\cite{shah2025}---entirely onboard a GPU-less Raspberry Pi 4 Model B. Validated across both Gazebo SITL simulations ($\text{RMSE}_{3D} = 0.398~\text{m}$) and four unstructured indoor and outdoor physical environments without motion capture or GNSS, the system attains an aggregate real-world mean 3D tracking error of $0.276~\text{m}$ ($\text{RMSE}_{3D} = 0.358~\text{m}$) and $0.203~\text{m}$ closed-loop return drift while operating stably at $90.8\%$ mean CPU utilization and $45.2^\circ\text{C}$, demonstrating that sub-$0.30~\text{m}$ 3D visual-inertial navigation is achievable without GPU acceleration or LiDAR payloads.
+
+
+
+\begin{thebibliography}{10}
+
+\bibitem{mohta2018}
+K.~Mohta \emph{et al.}, ``Fast, autonomous flight in GPS-denied and cluttered environments,'' \emph{Journal of Field Robotics}, vol.~35, no.~1, pp.~121--163, 2018.
+
+\bibitem{zhou2021}
+X.~Zhou, Z.~Wang, H.~Ye, C.~Xu, and F.~Gao, ``EGO-Planner: An ESDF-free gradient-based local planner for quadrotors,'' \emph{IEEE Robotics and Automation Letters}, vol.~6, no.~2, pp.~478--485, 2021.
+
+\bibitem{hu2025}
+Z.~Hu \emph{et al.}, ``Vision-based autonomous navigation in unknown and constrained environments,'' \emph{International Journal of Intelligent Robotics and Applications}, 2025.
+
+\bibitem{karjalainen2025}
+V.~Karjalainen \emph{et al.}, ``Autonomous photogrammetric forest inventory with a lightweight drone,'' \emph{ISPRS / Under-Canopy UAV Navigation Study}, 2025.
+
+\bibitem{barbaslaina2025}
+D.~Barbas Laina \emph{et al.}, ``Scalable outdoors autonomous drone flight with visual-inertial SLAM,'' \emph{IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)}, 2025.
+
+\bibitem{swift2025}
+SWIFT Authors, ``SWIFT: A distributed one-stage planner for multi-quadrotor trajectory optimization,'' \emph{IEEE Robotics / Multi-UAV Navigation}, 2025.
+
+\bibitem{zheng2024}
+C.~Zheng \emph{et al.}, ``FAST-LIVO2: Fast, direct LiDAR-inertial-visual odometry,'' \emph{IEEE Transactions on Robotics (arXiv:2408.14035)}, 2024.
+
+\bibitem{shah2025}
+A.~K. Shah, B.~Yonzan, L.~B. Jayswal, and S.~Khadka, ``Simulation and real time implementation of visual SLAM in an indoor environment using a quadcopter,'' in \emph{Proc. Dept. of Mechanical and Aerospace Engineering Project Conf.}, IOE Pulchowk Campus, Tribhuvan University, Nepal, Mar. 2025.
+
+\bibitem{abdulrahman2025}
+B.~A. Abdul Rahman \emph{et al.}, ``AIRBRIDGE: An autonomous delivery drone with VIO/SLAM,'' \emph{International Journal of Engineering Development and Research (IJEDR)}, 2025.
+
+\bibitem{james2023}
+A.~James, A.~Seth, E.~Kuantama, S.~Mukhopadhyay, and R.~Han, ``Sensor fusion for autonomous indoor UAV navigation in confined spaces,'' in \emph{2023 IEEE Sensors Applications Symposium (SAS)}, pp.~1--6, 2023.
+
+\end{thebibliography}

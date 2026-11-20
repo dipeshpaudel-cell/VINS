@@ -1,0 +1,37 @@
+\begin{table*}[htbp]
+\centering
+\caption{System Comparison with Prior Work}
+\label{tab:system_comparison_portrait}
+\renewcommand{\arraystretch}{1.2}
+\setlength{\tabcolsep}{3.5pt}
+\scriptsize
+\begin{tabular}{>{\raggedright\arraybackslash}p{2.35cm} >{\centering\arraybackslash}p{1.75cm} >{\centering\arraybackslash}p{1.85cm} >{\centering\arraybackslash}p{1.85cm} >{\centering\arraybackslash}p{1.55cm} >{\centering\arraybackslash}p{1.35cm} >{\centering\arraybackslash}p{1.75cm} >{\centering\arraybackslash}p{1.95cm} >{\centering\arraybackslash}p{1.55cm}}
+\toprule
+\rowcolor{blue!25}
+\textbf{Study} &
+\textbf{Companion Computer} &
+\textbf{State Estimation} &
+\textbf{Path Planner} &
+\textbf{Flight Controller Node} &
+\textbf{Flight Speed} &
+\textbf{Obstacle Avoidance} &
+\textbf{Mean Tracking Error} &
+\textbf{CPU Utilization} \\
+\midrule
+Abdul Rahman et al. (2025) & Jetson Nano (4 GB) & VINS-Mono / ORB-SLAM3 + EKF & $A^*$ + YOLOv8 (reactive) & PX4 internal PID & Not reported & Vision-based (YOLOv8) & 0.32~m MAE (0.28~m wp) & Not reported \\
+Karjalainen et al. (2025) & Jetson Orin NX & VINS-Fusion (VIO) & EGO-Planner-v2 (3D) & Custom PX4 tracker & 0.5--1.5~m/s & 3D voxel-based & 0.33--0.47~m (VIO ATE) & Not reported \\
+James et al. (2023) & Jetson Nano & Visual-Inertial-LiDAR & Reactive local planner & PX4 internal PID & Low-speed indoor & 3D sensor-based & 0.40~m (nav error) & Not reported \\
+Mohta et al. (2018) & Intel NUC i7 & SVO + UKF & QP-based Safe Corridor (3D) & $SE(3)$ geometric & Up to 8~m/s & 3D safe corridor & $<0.6$~m drift over 60~m & $\sim 80\%$ (on i7) \\
+Barbas Laina et al. (2025) & Jetson Orin NX (16 GB) & OKVIS2 (VI-SLAM) & Informed RRT* + Anchoring & PixRacer controller & Up to 4~m/s & 3D volumetric (\texttt{supereight2}) & 0.51~m ATE ($<1.0$~m drift) & 52~ms VIO / 217~ms depth \\
+Shah et al. (2025) & Raspberry Pi 4B & RTAB-MAP & $A^*$ + RPP (2D only) & $SE(3)$ geometric & $\sim 0.1$~m/s & 2D grid-based & 0.077~m (path error)* & Not reported \\
+Zheng et al. (2024) & Intel NUC i7 / Orin NX & FAST-LIVO2 (LIO-VIO) & Bubble Planner (3D) & On-manifold MPC & Up to 3~m/s & 3D corridor / bubble & 0.045--0.080~m (ATE RMSE) & 53.47~ms/frame \\
+SWIFT (2025) & Jetson Orin NX (16 GB) & Collaborative VINS-Fusion & SWIFT (Neural Net 3D) & STM32 controller & 1.5~m/s (real) / 10~m/s (sim) & Depth-based neural 3D & 3.31~m (loop VIO drift) & 0.89~ms inference \\
+Hu et al. (2025) & Intel NUC11 i7 & VINS-Mono (VIO) & EGO-Planner (3D) & Cascaded PID & Low-speed indoor & 3D voxel-based & Not reported ($\ge 70\%$ succ.) & Not reported \\
+Zhou et al. (2021) & Intel Core i7 / NUC & Stereo / RGB-D VIO & EGO-Planner (3D) & $SE(3)$ geometric & 3.0--3.56~m/s & 3D ESDF-free voxel & Not reported & 0.81~ms planning \\
+\midrule
+\rowcolor{blue!10}
+\textbf{Our Project (2026)} & \textbf{Raspberry Pi 4B} & \textbf{VINS-Fusion (VIO)} & \textbf{EGO-Planner (3D)} & \textbf{$SE(3)$ geometric} & \textbf{0.5~m/s} & \textbf{3D voxel-based} & \textbf{0.276~m (mean 3D)} & \textbf{90.8\% mean} \\
+\bottomrule
+\multicolumn{9}{l}{\scriptsize *2D grid path error only; Our Project (2026) reports full 3D closed-loop Euclidean tracking error ($\text{RMSE}_{3D} = 0.358$~m).}
+\end{tabular}
+\end{table*}
