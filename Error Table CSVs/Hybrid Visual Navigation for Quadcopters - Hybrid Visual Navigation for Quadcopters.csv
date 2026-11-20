@@ -1,0 +1,14 @@
+Study (Year),Onboard Computer,Sensors,VIO/SLAM Algorithm,Path Planner,Simulation,Real-World,Error Metric Type,Quantitative Error
+Barbas Laina et al. (2025),NVIDIA Jetson Orin NX 16GB,"Intel RealSense D455 (IR Stereo, IMU)",OKVIS2 (VI-SLAM),Informed RRT*,Yes (Forest),Yes (Forest),VIO/SLAM ATE,0.51 m (vs 1.26m for VIO)
+Zhou et al. (2025),NVIDIA Jetson Orin NX,"Intel RealSense D435, Holybro IMU",VINS-Fusion,EGO-Planner-V2,No,Yes (Forest),VIO ATE,0.33 m - 0.47 m
+Paudel (2026),Raspberry Pi 4B,"Intel RealSense D435, Pixhawk 4 IMU",VINS-Fusion,EGO-Planner,Yes (Gazebo),Yes (Indoor/Outdoor),VIO Localization,0.20 m closed-loop drift
+,,,,,,,Trajectory Tracking,0.276 m Mean 3D Error
+SWIFT (2025),NVIDIA Jetson Orin NX 16GB,"Intel RealSense D435, IMU",VINS-Fusion (Collaborative),SWIFT (Neural Net),Yes (Clutter),Yes (Forest/Indoor),VIO Localization,3.31 m drift (vs 3.91m)
+Montes-Grova et al. (2026),Intel NUC i7,"Ouster OS0-128 LiDAR, IMU",COIN-LIO (Lidar-Inertial),Fast-Planner,No,Yes (Tunnel),Mapping Accuracy,0.19 m Mean Error
+Zhang et al. (2026),Nvidia Orin NX,Intel RealSense D435i,VIO (EKF fusion),Reinforcement Learning,Yes (Isaac Lab),Yes (Indoor/Outdoor),Navigation Speed,Up to 7.5 m/s
+Song et al. (2023),N/A (HITL),Depth Camera,N/A (End-to-End),Reinforcement Learning,Yes (HITL),No,Navigation Speed,Up to 15.1 m/s
+Zhou et al. (2024),NVIDIA Jetson Orin 16GB,Intel RealSense D455,OKVIS2 (VI-SLAM),Control Barrier Func.,Yes (Gazebo),Yes (Indoor),Safety Performance,h_min >= 0.05 m (safe)
+Cioffi et al. (2025),Not specified,"Camera, IMU",HDVIO2.0,N/A,No,Yes (Windy),VIO Estimation,33% improvement in motion est.
+Xiao et al. (2025),Jetson Xavier NX,RealSense D435i,Not specified,LLM + Local Planner,No,Yes (Indoor),Planning Latency,~9s (Global Path)
+EGO-Planner (2021),Intel CPU,Intel RealSense D435,VIO (unspecified),EGO-Planner,Yes,Yes (Indoor/Outdoor),Planning Latency,0.81 ms
+Fast-Planner (FlightBench 2024),Not specified,"Depth Camera, IMU",Not specified,Fast-Planner,Yes (Forest),No,Success Rate,0.9
